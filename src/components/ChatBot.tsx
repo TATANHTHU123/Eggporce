@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 type Message = {
   role: 'user' | 'bot';
@@ -19,6 +19,13 @@ export default function ChatBot() {
     },
   ]);
 
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  // auto scroll
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, loading]);
+
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
 
@@ -26,10 +33,7 @@ export default function ChatBot() {
 
     setMessages((prev) => [
       ...prev,
-      {
-        role: 'user',
-        text: userText,
-      },
+      { role: 'user', text: userText },
     ]);
 
     setInput('');
@@ -38,12 +42,8 @@ export default function ChatBot() {
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: userText,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userText }),
       });
 
       const data = await res.json();
@@ -52,9 +52,7 @@ export default function ChatBot() {
         ...prev,
         {
           role: 'bot',
-          text:
-            data.reply ||
-            'Xin lỗi, tôi chưa có câu trả lời.',
+          text: data.reply || 'Xin lỗi, tôi chưa có câu trả lời.',
         },
       ]);
     } catch (error) {
@@ -64,8 +62,7 @@ export default function ChatBot() {
         ...prev,
         {
           role: 'bot',
-          text:
-            'Xin lỗi, chatbot hiện không khả dụng.',
+          text: 'Xin lỗi, chatbot hiện không khả dụng.',
         },
       ]);
     } finally {
@@ -75,24 +72,22 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* Nút mở chat */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-green-600 text-white shadow-xl hover:scale-110 transition"
+          className="fixed bottom-4 right-4 z-50 w-14 h-14 rounded-full bg-green-600 text-white shadow-lg hover:scale-110 transition"
         >
           💬
         </button>
       )}
 
-      {/* Khung chat */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-[380px] h-[600px] bg-white rounded-3xl shadow-2xl border z-50 overflow-hidden flex flex-col">
+        <div className="fixed bottom-4 right-4 w-[90vw] max-w-[340px] h-[70vh] max-h-[520px] bg-white rounded-2xl shadow-2xl border z-50 flex flex-col overflow-hidden">
 
           {/* Header */}
-          <div className="bg-green-600 text-white p-4 flex items-center justify-between">
+          <div className="bg-green-600 text-white px-4 py-3 flex justify-between items-center">
             <div>
-              <h3 className="font-semibold">
+              <h3 className="text-sm font-semibold">
                 EGGPORCE Assistant
               </h3>
               <p className="text-xs opacity-80">
@@ -102,29 +97,27 @@ export default function ChatBot() {
 
             <button
               onClick={() => setIsOpen(false)}
-              className="text-2xl"
+              className="text-lg"
             >
               ×
             </button>
           </div>
 
-          {/* Tin nhắn */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-gray-50 text-sm">
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex ${
-                  msg.role === 'user'
+                className={`flex ${msg.role === 'user'
                     ? 'justify-end'
                     : 'justify-start'
-                }`}
+                  }`}
               >
                 <div
-                  className={`max-w-[80%] px-4 py-2 rounded-2xl ${
-                    msg.role === 'user'
+                  className={`max-w-[75%] px-3 py-1.5 rounded-2xl ${msg.role === 'user'
                       ? 'bg-green-600 text-white'
                       : 'bg-white border'
-                  }`}
+                    }`}
                 >
                   {msg.text}
                 </div>
@@ -133,33 +126,31 @@ export default function ChatBot() {
 
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-white border px-4 py-2 rounded-2xl">
+                <div className="bg-white border px-3 py-1.5 rounded-2xl">
                   Đang trả lời...
                 </div>
               </div>
             )}
+
+            <div ref={bottomRef} />
           </div>
 
           {/* Input */}
-          <div className="border-t p-4 flex gap-2">
+          <div className="border-t p-3 flex gap-2">
             <input
               value={input}
-              onChange={(e) =>
-                setInput(e.target.value)
-              }
+              onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  sendMessage();
-                }
+                if (e.key === 'Enter') sendMessage();
               }}
               placeholder="Hỏi về EGGPORCE..."
-              className="flex-1 border rounded-xl px-3 py-2 outline-none"
+              className="flex-1 border rounded-lg px-3 py-1.5 text-sm outline-none"
             />
 
             <button
               onClick={sendMessage}
               disabled={loading}
-              className="bg-green-600 text-white px-5 rounded-xl"
+              className="bg-green-600 text-white px-4 rounded-lg text-sm"
             >
               Gửi
             </button>
