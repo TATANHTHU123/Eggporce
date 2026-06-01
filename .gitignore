@@ -1,0 +1,39 @@
+# Node modules
+node_modules/
+package-lock.json
+
+# Next.js build output
+.next/
+out/
+
+# Production build
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Vercel deployment
+.vercel/
+
+# Optional: TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+jest-test-results.json
+
+# IDE
+.vscode/
+.idea/
+
+# TurboRepo
+turbo/
+
+# Video/assets nặng (THÊM CÁI NÀY)
+public/assets/videos/
