@@ -63,7 +63,7 @@ const achievements = [
       'Dự án được ghi hình và chia sẻ trên nền tảng “Miền gạo trắng nước trong”, giúp lan tỏa rộng rãi hơn.',
     date: 'Truyền thông',
     icon: 'TvIcon',
-    video: '/assets/videos/cantho2.mp4',
+    image: '/assets/images/anh26.jpg',
     alt: 'EGGPORCE trên truyền hình'
   },
   {
@@ -73,7 +73,7 @@ const achievements = [
       'Dự án được ghi hình và chia sẻ trên "Cùng Sống Xanh" số 149, giúp lan tỏa rộng rãi hơn.',
     date: 'Truyền thông',
     icon: 'TvIcon',
-    video: '/assets/videos/thanhnien.mp4',
+    image: '/assets/images/anh27.jpg',
     alt: 'EGGPORCE trên Báo Thanh Niên'
   }
 ];
@@ -91,24 +91,13 @@ export default function BlogGrid() {
             >
               {/* Image / Video */}
               <div className="relative aspect-[4/3] overflow-hidden">
-                {item.video ? (
-                  <video
-                    preload="metadata"
-                    controls
-                    className="absolute inset-0 w-full h-full object-cover"
-                  >
-                    <source src={item.video} type="video/mp4" />
-                    Trình duyệt của bạn không hỗ trợ video.
-                  </video>
-                ) : (
-                  <AppImage
-                    src={item.image!}
-                    alt={item.alt}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                )}
+                <AppImage
+                  src={item.image}
+                  alt={item.alt}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
 
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 rounded-full bg-white/90 text-foreground text-xs font-semibold inline-flex items-center gap-1">
