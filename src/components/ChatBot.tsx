@@ -103,8 +103,9 @@ export default function ChatBot() {
             </button>
           </div>
 
+
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-gray-50 text-sm">
+          <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-gray-50 text-sm">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -114,9 +115,9 @@ export default function ChatBot() {
                   }`}
               >
                 <div
-                  className={`max-w-[75%] px-3 py-1.5 rounded-2xl ${msg.role === 'user'
+                  className={`max-w-[85%] px-4 py-3 rounded-2xl whitespace-pre-line break-words leading-relaxed shadow-sm ${msg.role === 'user'
                       ? 'bg-green-600 text-white'
-                      : 'bg-white border'
+                      : 'bg-white border border-gray-200'
                     }`}
                 >
                   {msg.text}
@@ -126,14 +127,16 @@ export default function ChatBot() {
 
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-white border px-3 py-1.5 rounded-2xl">
-                  Đang trả lời...
+                <div className="bg-white border border-gray-200 px-4 py-3 rounded-2xl">
+                  ⏳ Đang trả lời...
                 </div>
               </div>
             )}
 
             <div ref={bottomRef} />
           </div>
+
+
 
           {/* Input */}
           <div className="border-t p-3 flex gap-2">
