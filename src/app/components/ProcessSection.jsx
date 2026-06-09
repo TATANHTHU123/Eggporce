@@ -46,7 +46,6 @@ export default function ProcessSection() {
     );
   };
 
-  // Auto slide mỗi 10 giây + reset khi currentStep đổi
   useEffect(() => {
     const interval = setInterval(() => {
       nextStep();
@@ -58,6 +57,7 @@ export default function ProcessSection() {
   return (
     <section className="py-24 px-6 bg-background relative overflow-hidden">
       <div className="max-w-5xl mx-auto">
+
         {/* Header */}
         <div className="text-center mb-16">
           <span className="section-label mx-auto inline-flex mb-6">
@@ -77,6 +77,7 @@ export default function ProcessSection() {
 
         {/* Slider */}
         <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+
           <div
             className="flex transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={{
@@ -93,9 +94,8 @@ export default function ProcessSection() {
                 >
                   {/* Image */}
                   <div
-                    className={`absolute inset-0 transition-transform duration-[2000ms] ease-out ${
-                      isActive ? 'scale-105' : 'scale-100'
-                    }`}
+                    className={`absolute inset-0 transition-transform duration-[2000ms] ease-out ${isActive ? 'scale-105' : 'scale-100'
+                      }`}
                   >
                     <AppImage
                       src={item.image}
@@ -105,28 +105,29 @@ export default function ProcessSection() {
                     />
                   </div>
 
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/40" />
+                  {/* ❌ ĐÃ XÓA OVERLAY */}
 
                   {/* Content */}
                   <div
-                    className={`absolute bottom-0 left-0 right-0 p-10 text-white z-10 transition-all duration-1000 ${
-                      isActive
+                    className={`absolute bottom-0 left-0 right-0 p-10 z-10 transition-all duration-1000 ${isActive
                         ? 'translate-y-0 opacity-100'
                         : 'translate-y-10 opacity-0'
-                    }`}
+                      }`}
                   >
-                    <span className="inline-block px-4 py-1 rounded-full bg-accent text-sm font-medium mb-4">
-                      {item.step}
-                    </span>
+                    <div className="max-w-2xl">
 
-                    <h3 className="text-4xl font-display font-semibold mb-4">
-                      {item.title}
-                    </h3>
+                      <span className="inline-block px-4 py-1 rounded-full bg-accent text-sm font-medium mb-4 text-white shadow">
+                        {item.step}
+                      </span>
 
-                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
-                      {item.desc}
-                    </p>
+                      <h3 className="text-4xl font-display font-semibold mb-4 text-white drop-shadow-2xl">
+                        {item.title}
+                      </h3>
+
+                      <p className="text-lg text-white/95 leading-relaxed drop-shadow-lg">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
                 </div>
               );
@@ -156,11 +157,10 @@ export default function ProcessSection() {
             <button
               key={index}
               onClick={() => setCurrentStep(index)}
-              className={`rounded-full transition-all duration-500 ${
-                currentStep === index
+              className={`rounded-full transition-all duration-500 ${currentStep === index
                   ? 'w-8 h-3 bg-accent'
                   : 'w-3 h-3 bg-border'
-              }`}
+                }`}
             />
           ))}
         </div>
